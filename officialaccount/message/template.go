@@ -127,12 +127,15 @@ func (tpl *Template) Add(shortID string, keyNameList []string) (templateID strin
 	if err != nil {
 		return
 	}
-	var msg = struct {
-		ShortID     string   `json:"template_id_short"`
-		KeyNameList []string `json:"keyword_name_list"`
-	}{ShortID: shortID, KeyNameList: keyNameList}
-	uri := fmt.Sprintf("%s?access_token=%s", templateAddURL, accessToken)
-	var response []byte
+	var (
+		msg = struct {
+			ShortID     string   `json:"template_id_short"`
+			KeyNameList []string `json:"keyword_name_list"`
+		}{ShortID: shortID, KeyNameList: keyNameList}
+		uri      string
+		response []byte
+	)
+	uri = fmt.Sprintf("%s?access_token=%s", templateAddURL, accessToken)
 	response, err = util.PostJSON(uri, msg)
 	if err != nil {
 		return
